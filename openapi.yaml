@@ -1,0 +1,1157 @@
+openapi: 3.0.0
+info:
+  title: TeachReach-API
+  description: ASP.NET Core 6.0 microservice for a tutoring marketplace connecting teachers and students
+  version: 1.0.0
+  contact:
+    name: TeachReach Team
+    url: https://teachreach.example.com
+
+servers:
+  - url: http://localhost:5000
+    description: Development server
+  - url: https://api.teachreach.example.com
+    description: Production server
+
+tags:
+  - name: Teachers
+    description: Teacher management endpoints
+  - name: Students
+    description: Student management endpoints
+  - name: Subjects
+    description: Subject management endpoints
+  - name: Sessions
+    description: Teaching session management endpoints
+  - name: Reviews
+    description: Review and rating endpoints
+  - name: Authentication
+    description: Registration and login endpoints
+
+paths:
+  /api/teacher/teachers:
+    get:
+      tags:
+        - Teachers
+      summary: Get all teachers
+      description: Retrieve a list of all teachers with their subjects and reviews
+      operationId: getAllTeachers
+      responses:
+        '200':
+          description: List of teachers retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Teacher'
+        '500':
+          description: Internal server error
+
+  /api/teacher/teacher/{id}:
+    get:
+      tags:
+        - Teachers
+      summary: Get teacher by ID
+      description: Retrieve a specific teacher with their subjects and reviews
+      operationId: getTeacherById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The teacher ID
+      responses:
+        '200':
+          description: Teacher retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        '500':
+          description: Internal server error
+
+  /api/teacher/teacher/email/{email}:
+    get:
+      tags:
+        - Teachers
+      summary: Get teacher by email
+      description: Retrieve a specific teacher using their email address
+      operationId: getTeacherByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The teacher email address
+      responses:
+        '200':
+          description: Teacher retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Teacher'
+        '500':
+          description: Internal server error
+
+    post:
+      tags:
+        - Teachers
+      summary: Create a new teacher
+      description: Create a new teacher profile
+      operationId: createTeacher
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          description: Teacher created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/teacher/teacher:
+    post:
+      tags:
+        - Teachers
+      summary: Create a new teacher
+      description: Create a new teacher profile
+      operationId: createTeacher2
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          description: Teacher created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Teachers
+      summary: Update a teacher
+      description: Update an existing teacher profile
+      operationId: updateTeacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The teacher ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Teacher'
+      responses:
+        '200':
+          description: Teacher updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request - ID mismatch
+        '500':
+          description: Internal server error
+
+  /api/teacher/deleteTeacher/{id}:
+    delete:
+      tags:
+        - Teachers
+      summary: Delete a teacher
+      description: Delete a teacher profile by ID
+      operationId: deleteTeacher
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The teacher ID
+      responses:
+        '200':
+          description: Teacher deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/student/students:
+    get:
+      tags:
+        - Students
+      summary: Get all students
+      description: Retrieve a list of all students
+      operationId: getAllStudents
+      responses:
+        '200':
+          description: List of students retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Student'
+        '500':
+          description: Internal server error
+
+  /api/student/student/{id}:
+    get:
+      tags:
+        - Students
+      summary: Get student by ID
+      description: Retrieve a specific student by ID
+      operationId: getStudentById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The student ID
+      responses:
+        '200':
+          description: Student retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Students
+      summary: Delete a student
+      description: Delete a student profile by ID
+      operationId: deleteStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The student ID
+      responses:
+        '200':
+          description: Student deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Students
+      summary: Update a student
+      description: Update an existing student profile
+      operationId: updateStudent
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The student ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Student updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request - ID mismatch
+        '500':
+          description: Internal server error
+
+  /api/student/student/email/{email}:
+    get:
+      tags:
+        - Students
+      summary: Get student by email
+      description: Retrieve a specific student using their email address
+      operationId: getStudentByEmail
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The student email address
+      responses:
+        '200':
+          description: Student retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Student'
+        '500':
+          description: Internal server error
+
+  /api/student/student:
+    post:
+      tags:
+        - Students
+      summary: Create a new student
+      description: Create a new student profile
+      operationId: createStudent
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Student'
+      responses:
+        '200':
+          description: Student created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/subject/subjects:
+    get:
+      tags:
+        - Subjects
+      summary: Get all subjects
+      description: Retrieve a list of all available subjects
+      operationId: getAllSubjects
+      responses:
+        '200':
+          description: List of subjects retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+        '500':
+          description: Internal server error
+
+  /api/subject/subject/{id}:
+    get:
+      tags:
+        - Subjects
+      summary: Get subject by ID
+      description: Retrieve a specific subject by ID
+      operationId: getSubjectById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The subject ID
+      responses:
+        '200':
+          description: Subject retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subject'
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Subjects
+      summary: Delete a subject
+      description: Delete a subject by ID
+      operationId: deleteSubject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The subject ID
+      responses:
+        '200':
+          description: Subject deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Subjects
+      summary: Update a subject
+      description: Update an existing subject
+      operationId: updateSubject
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The subject ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subject'
+      responses:
+        '200':
+          description: Subject updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request - ID mismatch
+        '500':
+          description: Internal server error
+
+  /api/subject/subject:
+    post:
+      tags:
+        - Subjects
+      summary: Create a new subject
+      description: Create a new subject
+      operationId: createSubject
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Subject'
+      responses:
+        '200':
+          description: Subject created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/subject/teacher/{teacherId}/subjects:
+    get:
+      tags:
+        - Subjects
+      summary: Get subjects by teacher ID
+      description: Retrieve all subjects taught by a specific teacher
+      operationId: getSubjectsByTeacherId
+      parameters:
+        - name: teacherId
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The teacher ID
+      responses:
+        '200':
+          description: List of subjects retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Subject'
+        '500':
+          description: Internal server error
+
+  /api/session/sessions:
+    get:
+      tags:
+        - Sessions
+      summary: Get all sessions
+      description: Retrieve a list of all teaching sessions
+      operationId: getAllSessions
+      responses:
+        '200':
+          description: List of sessions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '500':
+          description: Internal server error
+
+  /api/session/session/{id}:
+    get:
+      tags:
+        - Sessions
+      summary: Get session by ID
+      description: Retrieve a specific session by ID
+      operationId: getSessionById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The session ID
+      responses:
+        '200':
+          description: Session retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Session'
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Sessions
+      summary: Delete a session
+      description: Delete a session by ID
+      operationId: deleteSession
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The session ID
+      responses:
+        '200':
+          description: Session deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Sessions
+      summary: Update a session
+      description: Update an existing session
+      operationId: updateSession
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The session ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Session'
+      responses:
+        '200':
+          description: Session updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request - ID mismatch
+        '500':
+          description: Internal server error
+
+  /api/session/session:
+    post:
+      tags:
+        - Sessions
+      summary: Create a new session
+      description: Create a new teaching session
+      operationId: createSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SessionRequestDto'
+      responses:
+        '200':
+          description: Session created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/session/teacher/{id}/sessions:
+    get:
+      tags:
+        - Sessions
+      summary: Get sessions by teacher ID
+      description: Retrieve all sessions for a specific teacher
+      operationId: getSessionsByTeacherId
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The teacher ID
+      responses:
+        '200':
+          description: List of sessions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Session'
+        '500':
+          description: Internal server error
+
+  /api/review/reviews:
+    get:
+      tags:
+        - Reviews
+      summary: Get all reviews
+      description: Retrieve a list of all reviews
+      operationId: getAllReviews
+      responses:
+        '200':
+          description: List of reviews retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '500':
+          description: Internal server error
+
+  /api/review/review/{id}:
+    get:
+      tags:
+        - Reviews
+      summary: Get review by ID
+      description: Retrieve a specific review by ID
+      operationId: getReviewById
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The review ID
+      responses:
+        '200':
+          description: Review retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '500':
+          description: Internal server error
+
+    delete:
+      tags:
+        - Reviews
+      summary: Delete a review
+      description: Delete a review by ID
+      operationId: deleteReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The review ID
+      responses:
+        '200':
+          description: Review deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+    put:
+      tags:
+        - Reviews
+      summary: Update a review
+      description: Update an existing review
+      operationId: updateReview
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+          description: The review ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        '200':
+          description: Review updated successfully
+          content:
+            application/json:
+              schema:
+                type: string
+        '400':
+          description: Bad request - ID mismatch
+        '500':
+          description: Internal server error
+
+  /api/review/review:
+    post:
+      tags:
+        - Reviews
+      summary: Create a new review
+      description: Create a new review for a teacher
+      operationId: createReview
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewRequestDto'
+      responses:
+        '200':
+          description: Review created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SaveResponse'
+        '500':
+          description: Internal server error
+
+  /api/registration/teacher-registration:
+    post:
+      tags:
+        - Authentication
+      summary: Teacher registration
+      description: Register a new teacher with subjects and hashed password
+      operationId: teacherRegistration
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeacherRegisterDto'
+      responses:
+        '200':
+          description: Teacher registered successfully
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Data inserted"
+        '400':
+          description: Bad request - Registration failed
+
+  /api/registration/teacher-login:
+    post:
+      tags:
+        - Authentication
+      summary: Teacher login
+      description: Login with teacher email and password
+      operationId: teacherLogin
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeacherLoginDto'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: string
+                example: "Valid Teacher"
+        '401':
+          description: Invalid credentials
+
+components:
+  schemas:
+    Teacher:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Teacher ID
+        firstName:
+          type: string
+          description: Teacher first name
+        lastName:
+          type: string
+          description: Teacher last name
+        email:
+          type: string
+          format: email
+          description: Teacher email address
+        password:
+          type: string
+          description: Teacher password (will be hashed)
+        bio:
+          type: string
+          nullable: true
+          description: Teacher bio
+        city:
+          type: string
+          nullable: true
+          description: Teacher city
+        phoneNumber:
+          type: string
+          description: Teacher phone number
+        experience:
+          type: integer
+          format: int32
+          description: Years of teaching experience
+        dateOfBirth:
+          type: string
+          format: date-time
+          description: Teacher date of birth
+        hourlyRate:
+          type: number
+          format: decimal
+          description: Teacher hourly rate
+        profilePictureUrl:
+          type: string
+          nullable: true
+          description: URL to teacher profile picture
+        subjects:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subject'
+          description: List of subjects taught by teacher
+        reviews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Review'
+          description: List of reviews for teacher
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - phoneNumber
+        - dateOfBirth
+        - hourlyRate
+
+    Student:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Student ID
+        firstName:
+          type: string
+          description: Student first name
+        lastName:
+          type: string
+          description: Student last name
+        email:
+          type: string
+          format: email
+          description: Student email address
+        password:
+          type: string
+          description: Student password (will be hashed)
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+
+    Subject:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Subject ID
+        name:
+          type: string
+          description: Subject name
+        description:
+          type: string
+          nullable: true
+          description: Subject description
+        teachers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Teacher'
+          description: Teachers who teach this subject
+      required:
+        - name
+
+    Session:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Session ID
+        teacherId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Teacher ID
+        studentId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Student ID
+        startTime:
+          type: string
+          format: date-time
+          description: Session start time
+        endTime:
+          type: string
+          format: date-time
+          description: Session end time
+        subjectId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Subject ID
+        notes:
+          type: string
+          nullable: true
+          description: Session notes
+        isCompleted:
+          type: boolean
+          description: Whether the session is completed
+      required:
+        - startTime
+        - endTime
+
+    SessionRequestDto:
+      type: object
+      properties:
+        teacherId:
+          type: integer
+          format: int32
+          description: Teacher ID
+        studentId:
+          type: integer
+          format: int32
+          description: Student ID
+        startTime:
+          type: string
+          format: date-time
+          description: Session start time
+        endTime:
+          type: string
+          format: date-time
+          description: Session end time
+        subjectId:
+          type: integer
+          format: int32
+          description: Subject ID
+        notes:
+          type: string
+          nullable: true
+          description: Session notes
+        isCompleted:
+          type: boolean
+          description: Whether the session is completed
+      required:
+        - teacherId
+        - studentId
+        - startTime
+        - endTime
+        - subjectId
+
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          description: Review ID
+        teacherId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Teacher ID
+        studentId:
+          type: integer
+          format: int32
+          nullable: true
+          description: Student ID
+        rating:
+          type: integer
+          format: int32
+          nullable: true
+          minimum: 1
+          maximum: 5
+          description: Rating from 1 to 5 stars
+        comment:
+          type: string
+          nullable: true
+          description: Review comment
+        dateCreated:
+          type: string
+          format: date-time
+          description: When the review was created
+      required:
+        - dateCreated
+
+    ReviewRequestDto:
+      type: object
+      properties:
+        teacherId:
+          type: integer
+          format: int32
+          description: Teacher ID
+        studentId:
+          type: integer
+          format: int32
+          description: Student ID
+        rating:
+          type: integer
+          format: int32
+          minimum: 1
+          maximum: 5
+          description: Rating from 1 to 5 stars
+        comment:
+          type: string
+          nullable: true
+          description: Review comment
+      required:
+        - teacherId
+        - studentId
+        - rating
+
+    TeacherRegisterDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: Teacher first name
+        lastName:
+          type: string
+          description: Teacher last name
+        email:
+          type: string
+          format: email
+          description: Teacher email address
+        password:
+          type: string
+          description: Teacher password (will be hashed with BCrypt)
+        bio:
+          type: string
+          nullable: true
+          description: Teacher bio
+        city:
+          type: string
+          nullable: true
+          description: Teacher city
+        phoneNumber:
+          type: string
+          description: Teacher phone number
+        experience:
+          type: integer
+          format: int32
+          description: Years of teaching experience
+        dateOfBirth:
+          type: string
+          format: date-time
+          description: Teacher date of birth
+        hourlyRate:
+          type: number
+          format: decimal
+          description: Teacher hourly rate
+        profilePictureUrl:
+          type: string
+          nullable: true
+          description: URL to teacher profile picture
+        subjectId:
+          type: array
+          items:
+            type: integer
+            format: int32
+          description: List of subject IDs that the teacher teaches
+      required:
+        - firstName
+        - lastName
+        - email
+        - password
+        - phoneNumber
+        - experience
+        - dateOfBirth
+        - hourlyRate
+        - subjectId
+
+    TeacherLoginDto:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: Teacher email address
+        password:
+          type: string
+          description: Teacher password
+      required:
+        - email
+        - password
+
+    SaveResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          description: Whether the operation was successful
+        errorMessage:
+          type: string
+          nullable: true
+          description: Error message if operation failed

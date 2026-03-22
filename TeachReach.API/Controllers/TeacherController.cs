@@ -38,7 +38,7 @@ namespace TeachReach.TeachReach.API.Controllers
         }
 
 
-        [HttpDelete("teacher/{id}")]
+        [HttpDelete("deleteTeacher/{id}")]
         public async Task<IActionResult> DeleteTeacher([FromRoute] int id)
         {
             try

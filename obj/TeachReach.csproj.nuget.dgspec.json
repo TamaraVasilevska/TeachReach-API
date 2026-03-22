@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\TamaraVasilevska\\source\\repos\\TeachReach\\TeachReach\\TeachReach.csproj": {}
+    "C:\\Users\\TamaraVasilevska\\OneDrive - Damilah Technology Ltd\\Desktop\\TeachReach\\TeachReach-API\\TeachReach.csproj": {}
   },
   "projects": {
-    "C:\\Users\\TamaraVasilevska\\source\\repos\\TeachReach\\TeachReach\\TeachReach.csproj": {
+    "C:\\Users\\TamaraVasilevska\\OneDrive - Damilah Technology Ltd\\Desktop\\TeachReach\\TeachReach-API\\TeachReach.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\TamaraVasilevska\\source\\repos\\TeachReach\\TeachReach\\TeachReach.csproj",
+        "projectUniqueName": "C:\\Users\\TamaraVasilevska\\OneDrive - Damilah Technology Ltd\\Desktop\\TeachReach\\TeachReach-API\\TeachReach.csproj",
         "projectName": "TeachReach",
-        "projectPath": "C:\\Users\\TamaraVasilevska\\source\\repos\\TeachReach\\TeachReach\\TeachReach.csproj",
+        "projectPath": "C:\\Users\\TamaraVasilevska\\OneDrive - Damilah Technology Ltd\\Desktop\\TeachReach\\TeachReach-API\\TeachReach.csproj",
         "packagesPath": "C:\\Users\\TamaraVasilevska\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\TamaraVasilevska\\source\\repos\\TeachReach\\TeachReach\\obj\\",
+        "outputPath": "C:\\Users\\TamaraVasilevska\\OneDrive - Damilah Technology Ltd\\Desktop\\TeachReach\\TeachReach-API\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\TamaraVasilevska\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Users\\TamaraVasilevska\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -36,8 +34,11 @@
           ]
         },
         "restoreAuditProperties": {
-          "enableAudit": "default"
-        }
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "10.0.100"
       },
       "frameworks": {
         "net6.0": {
@@ -118,19 +119,19 @@
           "downloadDependencies": [
             {
               "name": "Microsoft.AspNetCore.App.Ref",
-              "version": "[6.0.29, 6.0.29]"
+              "version": "[6.0.36, 6.0.36]"
             },
             {
               "name": "Microsoft.NETCore.App.Host.win-x64",
-              "version": "[6.0.29, 6.0.29]"
+              "version": "[6.0.36, 6.0.36]"
             },
             {
               "name": "Microsoft.NETCore.App.Ref",
-              "version": "[6.0.29, 6.0.29]"
+              "version": "[6.0.36, 6.0.36]"
             },
             {
               "name": "Microsoft.WindowsDesktop.App.Ref",
-              "version": "[6.0.29, 6.0.29]"
+              "version": "[6.0.36, 6.0.36]"
             }
           ],
           "frameworkReferences": {
@@ -141,7 +142,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.101\\RuntimeIdentifierGraph.json"
         }
       }
     }
